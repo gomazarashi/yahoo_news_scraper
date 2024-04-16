@@ -10,12 +10,11 @@ if response.status_code == 200:  # HTTPステータスコードが200(成功)の
         class_="newsFeed_item_title"
     )  # CSSセレクタでクラスが"newsFeed_item_title"の要素を取得
     news_titles = [
-        news_title.get_text() for news_title in news_titles 
+        news_title.get_text() for news_title in news_titles
     ]  # ニュースのタイトルをリストに格納
+    # ニュースのタイトルに順位を付与　慣れてきたらリスト内包表記やenumerateを
     for i in range(len(news_titles)):
-        news_titles[i] = (
-            str(i + 1) + "位: " + news_titles[i]
-        )  # ニュースのタイトルに順位を付与
+        news_titles[i] = str(i + 1) + "位: " + news_titles[i]
     for news_title in news_titles:
         print(news_title)
 
