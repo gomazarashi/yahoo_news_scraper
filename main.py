@@ -14,4 +14,4 @@ def fetch_news_titles():
 
 news_titles = fetch_news_titles()
 for i, title in enumerate(news_titles):
-    print(f"{str(i + 1)}位: {news_titles[i]}")
+    print(f"{i + 1}位: {title}")
