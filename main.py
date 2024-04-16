@@ -14,7 +14,7 @@ if response.status_code == 200:  # HTTPステータスコードが200(成功)の
     ]  # ニュースのタイトルをリストに格納
     # ニュースのタイトルに順位を付与　慣れてきたらリスト内包表記やenumerateを
     for i in range(len(news_titles)):
-        news_titles[i] = str(i + 1) + "位: " + news_titles[i]
+        news_titles[i] = f"{str(i + 1)}位: {news_titles[i]}"
     for news_title in news_titles:
         print(news_title)
 
