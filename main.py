@@ -1,22 +1,17 @@
-import requests as req  # HTMLファイルを取得するためのライブラリ
-from bs4 import BeautifulSoup as bs  # HTMLファイルを解析するためのライブラリ
+import requests  # HTMLファイルを取得するためのライブラリ
+from bs4 import BeautifulSoup  # HTMLファイルを解析するためのライブラリ
 
-url = "https://news.yahoo.co.jp/ranking/access/news"  # Yahoo!ニュースのランキングページのURL
+# Yahoo!ニュースのランキングページから、タイトルの順位順のリストを取得する
+def fetch_news_titles():
+    # HTMLファイルを取得
+    response = requests.get("https://news.yahoo.co.jp/ranking/access/news")
+    response.raise_for_status()
+    # HTMLファイルを解析
+    soup = BeautifulSoup(response.text, "html.parser")
+    # CSSセレクタでクラスが"newsFeed_item_title"の要素を取得
+    news_titles = soup.find_all(class_="newsFeed_item_title")
+    return [news_title.get_text() for news_title in news_titles]
 
-response = req.get(url)  # Yahoo!ニュースのランキングページのHTMLファイルを取得
-if response.status_code == 200:  # HTTPステータスコードが200(成功)の場合
-    soup = bs(response.text, "html.parser")  # HTMLファイルを解析
-    news_titles = soup.find_all(
-        class_="newsFeed_item_title"
-    )  # CSSセレクタでクラスが"newsFeed_item_title"の要素を取得
-    news_titles = [
-        news_title.get_text() for news_title in news_titles
-    ]  # ニュースのタイトルをリストに格納
-    # ニュースのタイトルに順位を付与　慣れてきたらリスト内包表記やenumerateを
-    for i in range(len(news_titles)):
-        news_titles[i] = f"{str(i + 1)}位: {news_titles[i]}"
-    for news_title in news_titles:
-        print(news_title)
-
-else:
-    print("HTMLファイルの取得に失敗しました。")
+news_titles = fetch_news_titles()
+for i, title in enumerate(news_titles):
+    print(f"{i + 1}位: {title}")
